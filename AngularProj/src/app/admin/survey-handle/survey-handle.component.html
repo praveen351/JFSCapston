@@ -1,0 +1,190 @@
+<mat-card class="entire-form">
+    <mat-card-content>
+        <div style="position: absolute;margin-left: 200px;margin-top:190px;">
+            <mat-card class="example-card" *ngIf="addFormdisbler">
+                <mat-card-content>
+                    <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
+                        <div>
+                            <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value,formDirective)"
+                                class="form" #formDirective="ngForm">
+                                <mat-form-field class="form-element" style="width: 409px;">
+                                    <mat-label>Enter Your Survey Name</mat-label>
+                                    <input matInput formControlName="survey_name">
+                                    <mat-error
+                                        *ngIf="formGroup.controls['survey_name'].touched && formGroup.controls['survey_name'].hasError('required')">
+                                        Survey Name mustn't be blank
+                                    </mat-error>
+                                </mat-form-field>
+                                <br />
+                                <mat-form-field class="form-element">
+                                    <mat-label>Choose open date</mat-label>
+                                    <input matInput [matDatepicker]="odp" formControlName="opening_date" [min]="today"
+                                        readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="odp"></mat-datepicker-toggle>
+                                    <mat-datepicker #odp></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="formGroup.controls['opening_date'].touched && formGroup.controls['opening_date'].hasError('required')">
+                                        Please Choose Proper Survey Opening Date
+                                    </mat-error>
+                                </mat-form-field>&nbsp;&nbsp;
+                                <mat-form-field class="form-element">
+                                    <mat-label>Choose your open time</mat-label>
+                                    <input matInput formControlName="opening_time" [ngxTimepicker]="otp" readonly>
+                                    <ngx-material-timepicker-toggle matSuffix [for]="otp">
+                                    </ngx-material-timepicker-toggle>
+                                    <ngx-material-timepicker #otp></ngx-material-timepicker>
+
+                                    <mat-error *ngIf="formGroup.controls['opening_time'].touched">
+                                        Please Choose Proper Survey Opening Time
+                                    </mat-error>
+
+                                </mat-form-field>
+                                <br />
+                                <mat-form-field class="form-element">
+                                    <mat-label>Choose close date</mat-label>
+                                    <input matInput [matDatepicker]="cdp" formControlName="closing_date" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="cdp"></mat-datepicker-toggle>
+                                    <mat-datepicker #cdp></mat-datepicker>
+                                    <mat-error
+                                        *ngIf="!formGroup.controls['closing_date'].valid && formGroup.controls['closing_date'].touched">
+                                        Please Choose Proper Survey Closing Date
+                                    </mat-error>
+                                    <mat-error *ngIf="formGroup.controls['closing_date'].hasError('mustLess')">
+                                        Closing Date must be Grater than Opening Date
+                                    </mat-error>
+                                </mat-form-field>&nbsp;&nbsp;
+                                <mat-form-field class="form-element">
+                                    <mat-label>Choose your close time</mat-label>
+                                    <input matInput formControlName="closing_time" [ngxTimepicker]="ctp" readonly>
+                                    <ngx-material-timepicker-toggle matSuffix [for]="ctp">
+                                    </ngx-material-timepicker-toggle>
+                                    <ngx-material-timepicker #ctp></ngx-material-timepicker>
+                                    <mat-error
+                                        *ngIf="!formGroup.controls['closing_time'].valid && formGroup.controls['closing_time'].touched">
+                                        Please Choose Proper Survey Closing Time
+                                    </mat-error>
+                                </mat-form-field>
+                                <br />
+                                <mat-form-field class="form-element">
+                                    <mat-label>Enter No Of Question</mat-label>
+                                    <input matInput formControlName="no_of_question" type="number"
+                                        (keyup)="handleNumbervalidation($event)">
+                                    <mat-error
+                                        *ngIf="!formGroup.controls['no_of_question'].valid && formGroup.controls['no_of_question'].touched">
+                                        Please Choose Proper No_of_question for Survey
+                                    </mat-error>
+                                </mat-form-field>
+                                &nbsp;&nbsp;<mat-form-field class="form-element">
+                                    <mat-label>Enter No Of Candidate</mat-label>
+                                    <input matInput formControlName="no_of_candidate"
+                                        (keyup)="handleNumbervalidation($event)" type="number">
+                                    <mat-error
+                                        *ngIf="!formGroup.controls['no_of_candidate'].valid && formGroup.controls['no_of_candidate'].touched">
+                                        Please Choose Proper No Of Survey Candidate
+                                    </mat-error>
+                                </mat-form-field>
+                                <br />
+                                <br />
+                                <div class="form-element">
+                                    <button mat-raised-button color="primary" [disabled]="!formGroup.valid"
+                                        type="submit" class="button">{{sbtnName}}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </ng-template>
+
+                    <ng-template #loading>
+                        <div>
+                            <mat-grid-list cols="2" rowHeight="55px">
+                                <mat-grid-tile>
+                                    <label><b>SURVEY NAME</b></label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label>{{currentSurvey.servey_name}}</label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label><b>OPERNING DATE TIME</b></label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label>{{currentSurvey.opening_date_time}}</label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label><b>CLOSING DATE TIME</b></label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label>{{currentSurvey.closing_date_time}}</label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label><b>NO OF QUESTIONS</b></label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label>{{currentSurvey.no_of_question}}</label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label><b>NO OF CANDIDATES</b></label>
+                                </mat-grid-tile>
+                                <mat-grid-tile>
+                                    <label>{{currentSurvey.no_of_candidate}}</label>
+                                </mat-grid-tile>
+                            </mat-grid-list>
+                        </div>
+                    </ng-template>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div style="position: absolute;margin-left: 100px;margin-top:50px;">
+            <section>
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+                        <div class="example-button-container">
+                            <button mat-fab [disabled]="disableadd" (click)="addSurvey()"
+                                style="background-color: #66d9ff;">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab [disabled]="disableedit" (click)="editSurvey()"
+                                style="background-color: #ffa366;">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab style="background-color: #ff8566;" [disabled]="disableremove"
+                                (click)="deleteSurvey()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab (click)="restComponent()" style="background-color: chartreuse;">
+                                <mat-icon>restore</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div style="position: absolute;margin-left: 1000px;margin-top:150px;">
+            <mat-card class="scrollable-card">
+                <mat-card-content>
+                    <mat-list role="list">
+                        <mat-list-item *ngFor="let surveyobj of surveyList | async" role="listitem">
+                            <app-survey-value-child [survey_name]="surveyobj.survey.servey_name"
+                                [view_btn_ctrl]="view_btn_ctrl" [delete_btn_ctrl]="delete_btn_ctrl"
+                                [add_btn_ctrl]="add_btn_ctrl" [selected]="surveyobj.selected"
+                                [update_btn_ctrl]="update_btn_ctrl" [survey_id]="surveyobj.survey.surveyid"
+                                (survey_handler)="getChildData($event)" (edit_handler)="editChildData()"
+                                (remove_handler)="removeChildData()" (view_handler)="viewChildData()"
+                                (add_handler)="addChildData()">
+                            </app-survey-value-child>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(25,87,150,0.82)" type="square-spin"
+    fullScreen="true">
+</ngx-spinner>

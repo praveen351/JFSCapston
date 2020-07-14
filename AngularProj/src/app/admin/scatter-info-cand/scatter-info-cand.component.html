@@ -1,0 +1,93 @@
+<div style="position: absolute;margin-top: 20px;margin-left: 600px;width: 700px;height: 400px;">
+    <div>
+        <kendo-chart (seriesClick)="onSeriesClick($event)">
+            <kendo-chart-value-axis>
+                <kendo-chart-value-axis-item [title]="{ text: 'Miles' }" [min]="1" [max]="10">
+                </kendo-chart-value-axis-item>
+            </kendo-chart-value-axis>
+            <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item [categories]="categories" [title]="{ text: 'Miles' }">
+                </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+                <kendo-chart-series-item [data]="seriesData" type="line">
+                </kendo-chart-series-item>
+            </kendo-chart-series>
+        </kendo-chart>
+    </div>
+    <br>
+    <div *ngIf="enableTableData" style="background-color: white;">
+        <section>
+            <div class="example-button-row" style="margin-left: 250px;">
+                <div class="example-flex-container">
+                    <div class="example-button-container">
+                        <button mat-fab (click)="candInfo()" style="background-color: darkorchid;">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                    <div class="example-button-container">
+                        <button mat-fab (click)="candResponse()" style="background-color: darkgrey;">
+                            <mat-icon>question_answer</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br>
+        <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
+            <div>
+                <mat-grid-list cols="2" rowHeight="55px">
+                    <mat-grid-tile>
+                        <label><b>CANDIDATE NAME</b></label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label>{{candData.candidate_name}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label><b>CANDIDATE MAIL ID</b></label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label>{{candData.candidate_email}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label><b>CANDIDATE RESPONSE DATE</b></label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label>{{candData.response_date}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label><b>CANDIDATE RESPONSE OPEN TIME</b></label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label>{{candData.open_time}}</label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label><b>CANDIDATE RESPONSE CLOSE TIME</b></label>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <label>{{candData.close_time}}</label>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </ng-template>
+        <ng-template #loading>
+            <table mat-table [dataSource]="dataSource" style="width: 700px;height: 270px;margin-left: 40px;">
+                <ng-container matColumnDef="candidate_request">
+                    <th mat-header-cell *matHeaderCellDef> Candidate Request </th>
+                    <td mat-cell *matCellDef="let element"> {{element.candidate_request}} </td>
+                </ng-container>
+                <ng-container matColumnDef="candidate_response">
+                    <th mat-header-cell *matHeaderCellDef> Candidate Response </th>
+                    <td mat-cell *matCellDef="let element"> {{element.candidate_response}} </td>
+                </ng-container>
+                <ng-container matColumnDef="candidate_response_type">
+                    <th mat-header-cell *matHeaderCellDef> Candidate Response Type</th>
+                    <td mat-cell *matCellDef="let element"> {{element.candidate_type}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+        </ng-template>
+    </div>
+</div>

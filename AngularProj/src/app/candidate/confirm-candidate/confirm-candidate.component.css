@@ -1,0 +1,25 @@
+.example-card {
+  width: 780px;
+  height: 340px;
+  background-image: url('../../images/thanku.png');
+  background-repeat: no-repeat;
+  opacity: 0.93;
+}
+.fiximage{
+  width: 100px;
+  height: 100px;
+}
+.entire-form{
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-right: 20px;
+  width: 1300px;
+  height: 570px;
+  position: absolute;
+  background-image: url('../../images/confermimage.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.submitted-card{
+  background-image: url('../../images/thanku.png');
+}

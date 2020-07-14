@@ -1,0 +1,22 @@
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.form-element{
+  width: 200px;
+  height: 60px;
+}
+.roption{
+  padding: 0;
+  height: 30px;
+  position: relative;
+  left: 0;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-color: rgba(0, 0, 0, .15);
+  background-color: white;
+  font-size: 16px;
+  width: 226px;
+  margin-right: -4px;
+}

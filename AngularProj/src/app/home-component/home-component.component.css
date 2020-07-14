@@ -1,0 +1,17 @@
+.example-card {
+  width: 280px;
+  height: 200px;
+}
+.fiximage{
+  width: 100px;
+  height: 100px;
+}
+.entire-form{
+  margin-left: 15px;
+  margin-top: 15px;
+  margin-right: 20px;
+  width: 1300px;
+  height: 570px;
+  position: absolute;
+  background-image: url('../images/Survey2.jpg');
+}

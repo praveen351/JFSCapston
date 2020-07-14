@@ -1,0 +1,64 @@
+<mat-card class="entire-form">
+    <mat-card-content>
+        <div>
+            <!-- (ngSubmit)="onSubmit(formGroup.value,formDirective)" -->
+            <form [formGroup]="survey_detail_data" class="form" #formDirective="ngForm">
+                <mat-form-field class="form-element" *ngIf="fillMode">
+                    <mat-label>Survey Detail ID</mat-label>
+                    <input matInput formControlName="survey_detail_id" readonly>
+                </mat-form-field>
+                <br />
+                <mat-form-field class="form-element" style="width: 409px;">
+                    <mat-label>Enter Survey Question</mat-label>
+                    <input matInput formControlName="survey_question">
+                    <mat-error
+                        *ngIf="survey_detail_data.controls['survey_question'].touched && survey_detail_data.controls['survey_question'].hasError('required')">
+                        Survey Question mustn't be blank
+                    </mat-error>
+                </mat-form-field>
+                <br />
+                <mat-form-field class="form-element">
+                    <mat-label>Select Answer Type</mat-label>
+                    <mat-select formControlName="res_pro_val" (selectionChange)="onOptionChange($event)">
+                        <mat-option *ngFor="let responsetype of responseTypeList | async"
+                            [value]="responsetype.response_type_id">
+                            {{responsetype.response_type}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>&nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-form-field class="form-element" *ngIf="demandResType">
+                    <mat-label>Select User Response Type</mat-label>
+                    <mat-select formControlName="user_res_scope">
+                        <mat-option *ngFor="let uoption of useroptiontype;let pointIndex=index" [value]="uoption.value">
+                            {{uoption.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div formArrayName="response_val" *ngIf="demandResType">
+                    <div *ngFor="let item of response_val.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <mat-form-field class="form-element">
+                            <mat-label>Enter Option Value</mat-label>
+                            <input matInput formControlName="options" />&nbsp;&nbsp;
+                            <mat-error
+                                *ngIf="item.controls['options'].touched && item.controls['options'].hasError('required')">
+                                Option Value mustn't be blank
+                            </mat-error>
+                        </mat-form-field>
+                        <button mat-raised-button color="warn" type="button" (click)="deleteOption(pointIndex)"
+                            style="background-color: #ff8c66;">DELETE</button>
+                    </div>
+                    <br>
+                    <br>
+                    <button mat-raised-button type="button" [disabled]="addButtonHandler()" (click)="addOptions()"
+                        style="background-color: #33bbff;">ADD
+                    </button>
+                </div>
+                <!-- <br />
+                <div class="form-element">
+                    <button mat-raised-button color="primary" [disabled]="!formGroup.valid" type="submit"
+                        class="button">Demi</button>
+                </div> -->
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

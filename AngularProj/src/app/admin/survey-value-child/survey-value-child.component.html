@@ -1,0 +1,28 @@
+<mat-card style="width: 150px;height:30px ;" [style.backgroundColor]="mart_cardcolor"
+    (contextmenu)="onRightClick($event)" (mouseover)="clickhoever($event)">
+    <mat-card-header style="position: absolute;">
+        <label (click)="sendSurveyID();">{{survey_name}}</label>
+    </mat-card-header>
+</mat-card>
+
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+    <button mat-menu-item (click)="editData()" *ngIf="update_btn_ctrl">
+        <mat-icon>update</mat-icon>
+        <span>Update</span>
+    </button>
+    <button mat-menu-item (click)="deleteData()" *ngIf="delete_btn_ctrl">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+    <button mat-menu-item (click)="viewData()" *ngIf="view_btn_ctrl">
+        <mat-icon>visibility</mat-icon>
+        <span>View</span>
+    </button>
+    <button mat-menu-item (click)="addData()" *ngIf="add_btn_ctrl">
+        <mat-icon>add</mat-icon>
+        <span>Add</span>
+    </button>
+</mat-menu>

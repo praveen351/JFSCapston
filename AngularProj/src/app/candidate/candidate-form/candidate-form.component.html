@@ -1,0 +1,51 @@
+<mat-card>
+    <mat-card-content>
+        <div>
+            <form [formGroup]="formGroup" class="form">
+                <mat-label>Q&nbsp;{{countfield+1}}&nbsp;.&nbsp;&nbsp;{{question}}</mat-label>
+                <br>
+                <mat-form-field class="form-element" *ngIf="listBControl[1]">
+                    <mat-label>Please Enter Answer</mat-label>
+                    <input matInput formControlName="candidate_r_ftextbox">
+                    <mat-error
+                        *ngIf="formGroup.controls['candidate_r_ftextbox'].touched && formGroup.controls['candidate_r_ftextbox'].hasError('required')">
+                        Survey Question mustn't be blank
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-element" *ngIf="listBControl[2]">
+                    <mat-label>Please Enter Answer</mat-label>
+                    <textarea matInput formControlName="candidate_r_ftextarea"
+                        placeholder="Ex. It makes me feel..."></textarea>
+                    <mat-error
+                        *ngIf="formGroup.controls['candidate_r_ftextarea'].touched && formGroup.controls['candidate_r_ftextarea'].hasError('required')">
+                        Survey Question mustn't be blank
+                    </mat-error>
+                </mat-form-field>
+
+                <div formArrayName="candidate_r_fcheckbox" *ngIf="listBControl[4]">
+                    <div *ngFor="let item of candidate_r_fcheckbox.controls; let pointIndex=index"
+                        [formGroupName]="pointIndex">
+                        <mat-checkbox formControlName="control_type" (change)="checkClick(pointIndex)">
+                            {{responseoption[pointIndex]}}</mat-checkbox>
+                        <br>
+                    </div>
+                </div>
+                <mat-radio-group formControlName="candidate_r_fradio" *ngIf="listBControl[3]">
+                    <mat-radio-button class="example-radio-button" *ngFor="let responsedata of responseoption"
+                        [value]="responsedata">
+                        {{responsedata}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field class="form-element" *ngIf="listBControl[0]">
+                    <mat-label>Select Options</mat-label>
+                    <mat-select formControlName="candidate_r_fselect" [multiple]="responsescopeb">
+                        <mat-option *ngFor="let responsedata of responseoption" [value]="responsedata">
+                            {{responsedata}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,96 @@
+<ng-template [ngIf]="paneltableinfo" [ngIfElse]="infopanel">
+    <div>
+        <mat-form-field style="width: 820px;">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" style="width: 820px;height: 270px;" matSort>
+            <ng-container matColumnDef="checked">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <!-- <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox> -->
+                    <mat-checkbox [(ngModel)]="element.checked" (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)"
+                        [aria-label]="checkboxLabel(element)" [(ngModel)]="element.checked">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="mailId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.mailId}} </td>
+            </ng-container>
+            <ng-container matColumnDef="candidate_id">
+                <th mat-header-cell *matHeaderCellDef> Search Detail Button </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-fab style="background-color: darkgrey;"
+                        (click)="getCandidateInfo(element.candidate_id)">
+                        <mat-icon>info</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sentstatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail Status </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon *ngIf="element.sentstatus=='mail'" style="color: lightskyblue;"> email</mat-icon>
+                    <mat-icon *ngIf="element.sentstatus=='success'" style="color: forestgreen;">check</mat-icon>
+                    <mat-icon *ngIf="element.sentstatus=='failure'" style="color: mediumorchid;">close</mat-icon>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <br>
+        <button mat-raised-button type="button" [disabled]="disabledSentBtn()" (click)="sentmail()"
+            style="background-color:floralwhite">SENT
+            MAIL</button>
+    </div>
+</ng-template>
+<ng-template #infopanel>
+    <div>
+        <button mat-fab *ngIf="!paneltableinfo" style="width: 820px;" (click)="navigateButton()"
+            style="background-color: cyan;">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <br>
+        <br>
+        <mat-form-field style="width: 820px;">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataDetailSource" style="width: 820px;height: 270px;" matSort>
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                <td mat-cell *matCellDef="let elementmeta"> {{elementmeta.count}} </td>
+            </ng-container>
+            <ng-container matColumnDef="sentdate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sent Date </th>
+                <td mat-cell *matCellDef="let elementmeta"> {{elementmeta.sentdate}} </td>
+            </ng-container>
+            <ng-container matColumnDef="sentstatus">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sent Status </th>
+                <td mat-cell *matCellDef="let elementmeta"> {{elementmeta.sentstatus}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedDetailColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedDetailColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</ng-template>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(25,87,150,0.82)" type="square-spin"
+    fullScreen="true">
+</ngx-spinner>

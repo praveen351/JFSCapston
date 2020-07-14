@@ -1,0 +1,125 @@
+<!-- <div style="position: absolute;margin-top: 20px;margin-left: 100px;">
+    <mat-card class="example-card" style="background-color: snow;">
+        <mat-card-content>
+            <section>
+                <div class="example-button-row" style="margin-left: 250px;">
+                    <div class="example-flex-container">
+                        <div class="example-button-container">
+                            <button mat-fab (click)="piechart()" style="background-color: seagreen;">
+                                <mat-icon>pie_chart</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab (click)="scatterplot()" style="background-color: skyblue;">
+                                <mat-icon>scatter_plot</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <div>
+                <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
+                    <div style="margin-top: 0px;margin-left: 150px;width: 450px;height: 450px;">
+                        <app-pichar-info-cand [pieData]="pieData"></app-pichar-info-cand>
+                    </div>
+                </ng-template>
+                <ng-template #loading>
+                    <div style="margin-top: 0px;margin-left:-550px;width: 450px;height: 450px;">
+                        <app-scatter-info-cand [seriesData]="seriesData" [categories]="categories">
+                        </app-scatter-info-cand>
+                    </div>
+                </ng-template>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div style="position: absolute;margin-left: 1000px;margin-top:150px;">
+    <mat-card class="scrollable-card">
+        <mat-card-content>
+            <mat-list role="list">
+                <mat-list-item *ngFor="let surveyobj of surveyList | async" role="listitem">
+                    <app-survey-value-child [survey_name]="surveyobj.survey.servey_name" [view_btn_ctrl]="view_btn_ctrl"
+                        [delete_btn_ctrl]="delete_btn_ctrl" [selected]="surveyobj.selected"
+                        [survey_id]="surveyobj.survey.surveyid" [add_btn_ctrl]="add_btn_ctrl"
+                        [update_btn_ctrl]="update_btn_ctrl" (survey_handler)="getChildData($event)"
+                        (edit_handler)="editChildData()" (remove_handler)="removeChildData()"
+                        (view_handler)="viewChildData()" (add_handler)="addChildData()">
+                    </app-survey-value-child>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>
+</mat-card-content>
+</mat-card>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(25,87,150,0.82)" type="square-spin"
+    fullScreen="true">
+</ngx-spinner> -->
+
+
+
+
+
+
+<mat-card class="entire-form">
+    <mat-card-content>
+        <div style="position: absolute;margin-top: 20px;margin-left: 10px;">
+            <mat-card class="example-card" *ngIf="addFormdisbler">
+                <section>
+                    <div class="example-button-row" style="margin-left: 250px;">
+                        <div class="example-flex-container">
+                            <div class="example-button-container">
+                                <button mat-fab (click)="piechart()" style="background-color: seagreen;">
+                                    <mat-icon>pie_chart</mat-icon>
+                                </button>
+                            </div>
+                            <div class="example-button-container">
+                                <button mat-fab (click)="scatterplot()" style="background-color: skyblue;">
+                                    <mat-icon>scatter_plot</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <br>
+                <div>
+                    <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
+                        <div style="margin-top: 0px;margin-left: 150px;width: 450px;height: 450px;">
+                            <app-pichar-info-cand [pieData]="pieData" [dataObj]="dataObj"></app-pichar-info-cand>
+                        </div>
+                    </ng-template>
+                    <ng-template #loading>
+                        <div style="margin-top: 0px;margin-left:-550px;width: 450px;height: 450px;">
+                            <app-scatter-info-cand [seriesData]="seriesData" [categories]="categories"
+                                [dataObj]="dataObj">
+                            </app-scatter-info-cand>
+                        </div>
+                    </ng-template>
+                </div>
+            </mat-card>
+        </div>
+
+        <div style="position: absolute;margin-left: 1000px;margin-top:150px;">
+            <mat-card class="scrollable-card">
+                <mat-card-content>
+                    <mat-list role="list">
+                        <mat-list-item *ngFor="let surveyobj of surveyList | async" role="listitem">
+                            <app-survey-value-child [survey_name]="surveyobj.survey.servey_name"
+                                [view_btn_ctrl]="view_btn_ctrl" [delete_btn_ctrl]="delete_btn_ctrl"
+                                [selected]="surveyobj.selected" [survey_id]="surveyobj.survey.surveyid"
+                                [add_btn_ctrl]="add_btn_ctrl" [update_btn_ctrl]="update_btn_ctrl"
+                                (survey_handler)="getChildData($event)" (edit_handler)="editChildData()"
+                                (remove_handler)="removeChildData()" (view_handler)="viewChildData()"
+                                (add_handler)="addChildData()">
+                            </app-survey-value-child>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(25,87,150,0.82)" type="square-spin"
+    fullScreen="true">
+</ngx-spinner>

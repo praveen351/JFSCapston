@@ -1,0 +1,97 @@
+<mat-card class="entire-form">
+    <mat-card-content>
+        <div style="position: absolute;margin-left: 200px;margin-top:190px;">
+            <mat-card class="example-card" *ngIf="addFormdisbler">
+                <mat-card-content>
+                    <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
+                        <div>
+                            <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value,formDirective)"
+                                class="form" #formDirective="ngForm">
+                                <div formArrayName="survey_detail_form">
+                                    <button mat-raised-button type="button" [disabled]="addButtonHandler()"
+                                        (click)="addOptions()" style="background-color: #1aff66;">ADD
+                                    </button>
+                                    <br>
+                                    <br>
+                                    <div *ngFor="let item of survey_detail_form.controls; let pointIndex=index"
+                                        [formGroupName]="pointIndex">
+                                        <app-survey-child-detail [survey_detail_data]="item"
+                                            [responseTypeList]="responseTypeList"
+                                            [demandResType]="handlerSwitch[pointIndex]" [fillMode]="fillMode">
+                                        </app-survey-child-detail>
+                                        <br>
+                                        <button mat-raised-button type="button" (click)="deleteOption(pointIndex)"
+                                            style="background-color: #ff5050;">DELETE</button>
+                                        <br>
+                                        <br>
+                                    </div>
+                                </div>
+                                <br />
+                                <!--  -->
+
+                                <div class="form-element">
+                                    <button mat-raised-button style="background-color: #ccffcc;" type="submit"
+                                        [disabled]="addButtonHandler()" class="button">{{sbtnName}}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </ng-template>
+
+                    <ng-template #loading>
+                        <div>
+                            Display
+                        </div>
+                    </ng-template>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div style="position: absolute;margin-left: 100px;margin-top:50px;">
+            <section>
+                <div class="example-button-row">
+                    <div class="example-flex-container">
+                        <div class="example-button-container">
+                            <button mat-fab style="background-color: #66d9ff;" [disabled]="disableadd"
+                                (click)="addSurvey()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab style="background-color: #ffa366;" [disabled]="disableedit"
+                                (click)="editSurvey()">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                        <!-- <div class="example-button-container">
+                            <button mat-fab color="warn" [disabled]="disableremove" (click)="deleteSurvey()">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div style="position: absolute;margin-left: 1000px;margin-top:150px;">
+            <mat-card class="scrollable-card">
+                <mat-card-content>
+                    <mat-list role="list">
+                        <mat-list-item *ngFor="let surveyobj of surveyList | async" role="listitem">
+                            <app-survey-value-child [survey_name]="surveyobj.survey.servey_name"
+                                [view_btn_ctrl]="view_btn_ctrl" [delete_btn_ctrl]="delete_btn_ctrl"
+                                [selected]="surveyobj.selected" [survey_id]="surveyobj.survey.surveyid"
+                                [update_btn_ctrl]="update_btn_ctrl" [add_btn_ctrl]="add_btn_ctrl"
+                                (survey_handler)="getChildData($event)" (edit_handler)="editChildData()"
+                                (remove_handler)="removeChildData()" (view_handler)="viewChildData()"
+                                (add_handler)="addChildData()">
+                            </app-survey-value-child>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card-content>
+</mat-card>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(25,87,150,0.82)" type="square-spin"
+    fullScreen="true">
+</ngx-spinner>
