@@ -57,13 +57,20 @@ public class CandidateService {
 		return 0;
 	}
 
+	public long getCandidate_Survey_Visited(String candidate_email, String candidate_name) {
+		CandidateEntity candidate_obj = candidate_repo.fetchCandidate_ID(candidate_email, candidate_name);
+		if (candidate_obj != null && candidate_obj.getOpen_time() == null) {
+			return 1;
+		}
+		return 0;
+	}
+
 	public long validateDate(long survey_id) {
 		SurveyEntity sentity = survey_repo.findById(survey_id).get();
-
 		try {
 			String opendate = sentity.getOpening_date_time().split("@")[0];
 			String opentime = sentity.getOpening_date_time().split("@")[1];
-			
+
 			String clendate = sentity.getClosing_date_time().split("@")[0];
 			String clentime = sentity.getClosing_date_time().split("@")[1];
 
@@ -87,10 +94,14 @@ public class CandidateService {
 
 	public long getCandidate_SurveyMailConf(String candidate_email, String candidate_name) {
 		CandidateEntity candidate_obj = candidate_repo.fetchCandidate_ID(candidate_email, candidate_name);
-		for (CandidateMail cobj : candidate_obj.getCandidate_mail_list())
-			if (cobj.getStatus().equals("ACTIVE") && cobj.getSent_status().equals("SUCCESS"))
-				return 1;
-		return 0;
+		if (candidate_obj != null) {
+			for (CandidateMail cobj : candidate_obj.getCandidate_mail_list())
+				if (cobj.getStatus().equals("ACTIVE") && cobj.getSent_status().equals("SUCCESS"))
+					return 1;
+			return 0;
+		} else {
+			return 0;
+		}
 	}
 
 	public long getCandidate_ID(String candidate_email, String candidate_name) {
@@ -102,7 +113,6 @@ public class CandidateService {
 		return 0;
 	}
 
-	//
 	public int updateCandidate(CandidateEntity candobj) {
 		Date date = Calendar.getInstance().getTime();
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -162,7 +172,7 @@ public class CandidateService {
 
 		return mapData;
 	}
-	
+
 	public CandidateEntity getSpecCandidate(long cand_id) {
 		return candidate_repo.getOne(cand_id);
 	}

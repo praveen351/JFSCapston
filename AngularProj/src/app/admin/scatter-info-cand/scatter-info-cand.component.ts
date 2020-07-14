@@ -55,6 +55,7 @@ export class ScatterInfoCandComponent implements OnInit {
   }
   candResponse() {
     this.switchViewEdit = false;
+    this.ELEMENT_DATA = [];
     this.candData.candidate_response_list.forEach(element => {
       this.ELEMENT_DATA.push({
         candidate_request: element.surveydetailentity.survey_question,

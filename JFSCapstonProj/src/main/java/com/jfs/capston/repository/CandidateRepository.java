@@ -15,7 +15,7 @@ import com.jfs.capston.model.CandidateEntity;
 public interface CandidateRepository extends JpaRepository<CandidateEntity, Long> {
 	@Query(value = "SELECT * FROM Candidate where status='ACTIVE' and cseid=:survey_id", nativeQuery = true)
 	List<CandidateEntity> findAllCandidateResponse(@Param("survey_id") long survey_id);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "update Candidate set cseid=:cseid where candidate_id=:candidate_id", nativeQuery = true)
@@ -33,7 +33,7 @@ public interface CandidateRepository extends JpaRepository<CandidateEntity, Long
 	@Query(value = "SELECT * FROM Candidate where candidate_email=:candidate_email and candidate_name=:candidate_name", nativeQuery = true)
 	CandidateEntity fetchCandidate_ID(@Param("candidate_email") String candidate_email,
 			@Param("candidate_name") String candidate_name);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "update Candidate set open_time=:open_time,close_time=:close_time,response_date=:response_date where candidate_id=:candidate_id", nativeQuery = true)

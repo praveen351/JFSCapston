@@ -55,20 +55,14 @@ public class CandidateController {
 		long scandidate_id = candidate_service.getCandidate_Survey(candidate.getCandidate_email(),
 				candidate.getCandidate_name());
 		long date_status = candidate_service.validateDate(scandidate_id);
-		if (mailvalidate != 0 && scandidate_id != 0 && date_status != 0) {
+		long visited_id = candidate_service.getCandidate_Survey_Visited(candidate.getCandidate_email(),
+				candidate.getCandidate_name());
+
+		if (mailvalidate != 0 && scandidate_id != 0 && date_status != 0 && visited_id == 1) {
 			return new ResponseEntity<Long>(scandidate_id, new HttpHeaders(), HttpStatus.OK);
 		}
 		return new ResponseEntity<Long>((long) 0, new HttpHeaders(), HttpStatus.OK);
 
-		// long scandidate_id =
-		// candidate_service.getCandidate_Survey(candidate.getCandidate_email(),
-		// candidate.getCandidate_name());
-		// long date_status = candidate_service.validateDate(scandidate_id);
-		// if (scandidate_id != 0 && date_status != 0) {
-		// return new ResponseEntity<Long>(scandidate_id, new HttpHeaders(),
-		// HttpStatus.OK);
-		// }
-		// return new ResponseEntity<Long>((long) 0, new HttpHeaders(), HttpStatus.OK);
 	}
 
 	@PostMapping("/getCandidateId")
