@@ -1,5 +1,6 @@
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ValidateDate } from '../validator/opdcdvalidation';
+import { ValidateRepeatMail } from '../validator/validateUniquemail';
 
 export class SurveyForm {
     private formGroup: FormGroup;
@@ -46,17 +47,12 @@ export class SurveyForm {
     public getCandidateFormGroup(): FormGroup {
         this.formGroup = this.formBuilder.group({
             candidate_final_form: this.formBuilder.array([this.getCandidateChildFormGroup()]),
+        }, {
+            validators: ValidateRepeatMail('candidate_final_form')
         });
         return this.formGroup;
     }
     public getCandidateResponseFormGroup(): FormGroup {
-        // this.formGroup = this.formBuilder.group({
-        //     candidate_response_form: this.formBuilder.array([this.formBuilder.group({ control_type: new FormControl('', [Validators.required]) })]),
-        //     candidate_r_fradio: new FormControl(null, [Validators.required]),
-        //     candidate_r_fselect: new FormControl(null, [Validators.required]),
-        //     candidate_r_ftextbox: new FormControl(null, [Validators.required]),
-        //     candidate_r_ftextarea: new FormControl(null, [Validators.required]),
-        // });
         this.formGroup = this.formBuilder.group({
             candidate_r_form: this.formBuilder.array([])
         });

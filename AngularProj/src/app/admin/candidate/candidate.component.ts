@@ -99,6 +99,9 @@ export class CandidateComponent implements OnInit {
 
   addButtonHandler(): boolean {
     let j = 0;
+    if (!this.candidate_final_form.valid) {
+      return true;
+    }
     for (let i = 0; i < this.candidate_final_form.length; i++) {
       if (this.candidate_final_form.controls[i].valid)
         j++;

@@ -8,10 +8,6 @@
                             <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value,formDirective)"
                                 class="form" #formDirective="ngForm">
                                 <div formArrayName="candidate_final_form">
-                                    <button mat-raised-button type="button" [disabled]="addButtonHandler()"
-                                        style="background-color: #1aff66;" (click)="addOptions()">ADD
-                                    </button>
-                                    <br>
                                     <br>
                                     <div *ngFor="let item of candidate_final_form.controls; let pointIndex=index"
                                         [formGroupName]="pointIndex">
@@ -20,9 +16,15 @@
                                         <br>
                                         <button mat-raised-button style="background-color: #ff5050;" type="button"
                                             (click)="deleteOption(pointIndex)">DELETE</button>
-                                        <br>
-                                        <br>
+                                        <button mat-raised-button type="button" [disabled]="addButtonHandler()"
+                                            style="background-color: #1aff66;position: absolute;margin-left: 300px;"
+                                            (click)="addOptions()">ADD
+                                        </button>
                                     </div>
+                                    <mat-error
+                                        *ngIf="formGroup.controls['candidate_final_form'].hasError('mustNonEqual')">
+                                        Email ID should be unique
+                                    </mat-error>
                                 </div>
                                 <br />
                                 <!--  -->

@@ -26,7 +26,7 @@ public class CapstonConfig {
 				new ResponseTypeEntity("CHECKBOX", "MULTIPLE", "ACTIVE")
 				));
 		for (ResponseTypeEntity responseTypeEntity : entityList) {
-//			repo_service.saveResponseTypeEntity(responseTypeEntity);
+			repo_service.saveResponseTypeEntity(responseTypeEntity);
 		}
 //		repo_respons
 	}
