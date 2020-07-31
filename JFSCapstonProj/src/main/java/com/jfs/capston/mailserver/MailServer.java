@@ -13,9 +13,15 @@ import javax.mail.internet.MimeMessage;
 
 public class MailServer {
 	public static String USER_NAME = "praveenkumar1234raja"; 
-	public static String PASSWORD = "0987rajapraja";
-	public static String SUBJECT_NAME = ""; 
-	public static String BODY = "";
+	public static String PASSWORD = "RajaPraja0987@";
+	public static String SUBJECT_NAME = "Regarding Survey"; 
+	public static String BODY = "Dear Candidate\r\n" + 
+			"\r\n" + 
+			"You need to survey the link http://localhost:4200/loginCandidate,\r\n" + 
+			"by respective Name and mail id.\r\n" + 
+			"\r\n" + 
+			"Regards\r\n" + 
+			"Admin(Praveen Kumar Samal)";
 	
 	public static int sendFromGMail(String from, String pass, List<String> to, String subject, String body) {
 		Properties props = System.getProperties();

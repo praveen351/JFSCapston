@@ -12,6 +12,11 @@
   display: table-cell;
   margin-right: 8px;
 }
+.fupload-card {
+  width: 700px;
+  height: 400px;
+  overflow-y: auto;
+}
 .form {
   min-width: 150px;
   max-width: 500px;

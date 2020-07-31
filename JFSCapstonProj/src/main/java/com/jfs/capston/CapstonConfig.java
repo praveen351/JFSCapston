@@ -13,21 +13,20 @@ import com.jfs.capston.service.ResponseTypeService;
 
 @Configuration
 public class CapstonConfig {
-	
+
 	@Autowired
-	ResponseTypeService repo_service; 
-	
-	@Bean void insertResponseTypeData() {
-		List<ResponseTypeEntity> entityList = new ArrayList<>(Arrays.asList(
-				new ResponseTypeEntity("DROPDOWN", "MULTIPLE", "ACTIVE"),
-				new ResponseTypeEntity("TEXTBOX", "SINGLE", "ACTIVE"),
-				new ResponseTypeEntity("TEXTAREA", "SINGLE", "ACTIVE"),
-				new ResponseTypeEntity("RADIOBUTTON", "MULTIPLE", "ACTIVE"),
-				new ResponseTypeEntity("CHECKBOX", "MULTIPLE", "ACTIVE")
-				));
+	ResponseTypeService repo_service;
+
+	@Bean
+	void insertResponseTypeData() {
+		List<ResponseTypeEntity> entityList = new ArrayList<>(
+				Arrays.asList(new ResponseTypeEntity("DROPDOWN", "MULTIPLE", "ACTIVE"),
+						new ResponseTypeEntity("TEXTBOX", "SINGLE", "ACTIVE"),
+						new ResponseTypeEntity("TEXTAREA", "SINGLE", "ACTIVE"),
+						new ResponseTypeEntity("RADIOBUTTON", "MULTIPLE", "ACTIVE"),
+						new ResponseTypeEntity("CHECKBOX", "MULTIPLE", "ACTIVE")));
 		for (ResponseTypeEntity responseTypeEntity : entityList) {
 			repo_service.saveResponseTypeEntity(responseTypeEntity);
 		}
-//		repo_respons
 	}
 }

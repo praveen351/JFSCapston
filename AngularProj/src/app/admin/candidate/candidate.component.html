@@ -1,6 +1,6 @@
 <mat-card class="entire-form">
     <mat-card-content>
-        <div style="position: absolute;margin-left: 200px;margin-top:190px;">
+        <div style="position: absolute;margin-left: 200px;margin-top:190px;" *ngIf="enableUploadFile">
             <mat-card class="example-card" *ngIf="addFormdisbler">
                 <mat-card-content>
                     <ng-template [ngIf]="switchViewEdit" [ngIfElse]="loading">
@@ -46,6 +46,13 @@
                 </mat-card-content>
             </mat-card>
         </div>
+        <div style="position: absolute;margin-left: 80px;margin-top:140px;" *ngIf="!enableUploadFile">
+            <mat-card class="fupload-card">
+                <mat-card-content>
+                    <app-upload-files [surveyid]="selectId"></app-upload-files>
+                </mat-card-content>
+            </mat-card>
+        </div>
         <div style="position: absolute;margin-left: 100px;margin-top:50px;">
             <section>
                 <div class="example-button-row">
@@ -54,6 +61,12 @@
                             <button mat-fab style="background-color: #66d9ff;" [disabled]="disableadd"
                                 (click)="addSurvey()">
                                 <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="example-button-container">
+                            <button mat-fab style="background-color: lightseagreen;" [disabled]="disableupload"
+                                (click)="uploadFile()">
+                                <mat-icon>cloud_upload</mat-icon>
                             </button>
                         </div>
                         <div class="example-button-container">

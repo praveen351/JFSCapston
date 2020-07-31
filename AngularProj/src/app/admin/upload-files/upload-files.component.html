@@ -1,0 +1,57 @@
+<div style="position: absolute;margin-left: 200px;margin-top: 10px;">
+    <button mat-raised-button style="background-color: lightskyblue" (click)="switchExcel()">
+        EXCEL
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button style="background-color: lightyellow" (click)="switchCSV()">
+        CSV
+    </button>
+</div>
+<div style="position: absolute;margin-left: 170px;margin-top: 70px;">
+    <label>
+        <input #csvInput type="file" hidden="true" (change)="selectFile($event)" [accept]="fileaccepttype"
+            multiple="false" />
+        <button mat-fab [disabled]="handleUpAttach" style="background-color: lightgreen" (click)="csvInput.click()">
+            <mat-icon>attachment</mat-icon>
+        </button>
+    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-fab style="background-color: lightpink" [disabled]="!handleUpload" (click)="upload()">
+        <mat-icon>cloud_upload</mat-icon>
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mat-fab style="background-color: lightslategrey" [disabled]="!handleUpload" (click)="displayTable()">
+        <mat-icon> table_chart</mat-icon>
+    </button>
+    <br>
+    <br>
+    <div style="position: absolute;margin-left: -150px;width: 550px;" *ngIf="handleUpDataTble">
+        <mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="candid">
+                <mat-header-cell *matHeaderCellDef>Candidate ID</mat-header-cell>
+                <mat-cell *matCellDef="let lesson">{{lesson.candidate_id}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="candname">
+                <mat-header-cell *matHeaderCellDef>Candidate Name</mat-header-cell>
+                <mat-cell *matCellDef="let lesson">{{lesson.candidate_name}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="candmail">
+                <mat-header-cell *matHeaderCellDef>Candidate Mail</mat-header-cell>
+                <mat-cell *matCellDef="let lesson">{{lesson.candidate_email}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 100]" [pageSize]="5">
+        </mat-paginator>
+    </div>
+    <br>
+    <br>
+    <div style="width: 300px;height: 20px;" *ngIf="handleUpProgressor">
+        &nbsp;&nbsp;<label>Progress</label>&nbsp;&nbsp;{{progress}}&nbsp; %<mat-progress-bar mode="determinate"
+            [value]="progress"></mat-progress-bar>
+    </div>
+</div>

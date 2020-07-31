@@ -46,8 +46,12 @@ export class ScatterInfoCandComponent implements OnInit {
         this.candData.open_time = element.open_time;
         this.candData.close_time = element.close_time;
         this.candData.candidate_response_list = element.candidate_response_list;
+        if (!this.switchViewEdit) {
+          this.candResponse();
+        }
       }
     });
+
     this.enableTableData = true;
   }
   candInfo() {

@@ -18,9 +18,12 @@ export class CandidateComponent implements OnInit {
 
   surveyList: BehaviorSubject<SurveyData[]> = new BehaviorSubject<SurveyData[]>([]);
   surveyfData: BehaviorSubject<Survey> = new BehaviorSubject<Survey>(new Survey());
+
   disableadd: boolean = true;
   disableedit: boolean = true;
-  disableremove: boolean = true;
+  disableupload: boolean = true;
+  enableUploadFile: boolean = true;
+
   selectId: number = 0;
   currentSurvey: Survey;
   addFormdisbler: boolean;
@@ -42,7 +45,7 @@ export class CandidateComponent implements OnInit {
     return this.formGroup.get('candidate_final_form') as FormArray;
   }
   addOptions() {
-    if (this.candidate_final_form.length === this.currentSurvey.no_of_question) {
+    if (this.candidate_final_form.length === this.currentSurvey.no_of_candidate) {
       this._snackBar.open('Sorry Your No of Questions are exceeding there limit from ' + this.currentSurvey.no_of_question, "DISCARD", {
         duration: 1700,
       });
@@ -87,7 +90,9 @@ export class CandidateComponent implements OnInit {
     });
     this.disableadd = false;
     this.disableedit = false;
-    this.disableremove = false;
+    this.disableupload = false;
+    this.enableUploadFile = true;
+    this.addFormdisbler = false;
   }
 
   editSurvey() {
@@ -123,6 +128,7 @@ export class CandidateComponent implements OnInit {
     this.fillMode = false;
     this.sbtnName = "SubmitForm";
     this.addFormdisbler = true;
+    this.enableUploadFile = true;
     this.switchViewEdit = true;
   }
   editChildData() {
@@ -133,6 +139,7 @@ export class CandidateComponent implements OnInit {
   }
   viewChildData() {
     this.addFormdisbler = true;
+    this.enableUploadFile = true;
     this.switchViewEdit = false;
   }
 
@@ -162,6 +169,7 @@ export class CandidateComponent implements OnInit {
       this.formGroup = this.pformGrp;
     });
     this.addFormdisbler = true;
+    this.enableUploadFile = true;
     this.switchViewEdit = true;
     this.sbtnName = "UpdateForm";
   }
@@ -233,5 +241,9 @@ export class CandidateComponent implements OnInit {
   }
   addChildData() {
     this.addSurvey();
+  }
+  uploadFile() {
+    this.enableUploadFile = false;
+    this.addFormdisbler = false;
   }
 }

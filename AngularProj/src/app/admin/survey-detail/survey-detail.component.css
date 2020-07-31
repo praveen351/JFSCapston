@@ -26,6 +26,11 @@
   height: 330px;
   overflow-y: auto;
 }
+.fupload-card {
+  width: 700px;
+  height: 400px;
+  overflow-y: auto;
+}
 .entire-form{
   margin-left: 15px;
   margin-top: 15px;

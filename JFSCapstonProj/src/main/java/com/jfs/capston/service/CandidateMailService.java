@@ -71,8 +71,8 @@ public class CandidateMailService {
 		List<String> candidate_mail = new ArrayList<String>();
 
 		String candmsg = "Congratulation ".concat(candidate.getCandidate_name()).concat(" , \n") + "\n"
-				+ "You had successfully visited the Survey page and your responses are very Good.......\r\n"
-				+ "\n" + "Candidate Details: \n" + "-------------------------------\r\n"
+				+ "You had successfully visited the Survey page and your responses are very Good.......\r\n" + "\n"
+				+ "Candidate Details: \n" + "-------------------------------\r\n"
 				+ "Name: ".concat(candidate.getCandidate_name()).concat("\n")
 				+ "Mail ID: ".concat(candidate.getCandidate_email()).concat("\n")
 				+ "Opening Time: ".concat(candidate.getOpen_time()).concat("\n")
@@ -82,7 +82,7 @@ public class CandidateMailService {
 		String candsubject = "Regarding Survey Confirmation";
 
 		candidate_mail.add(candidate.getCandidate_email());
-		
+
 		MailServer.sendFromGMail(MailServer.USER_NAME, MailServer.PASSWORD, candidate_mail, candsubject, candmsg);
 		return 1;
 	}

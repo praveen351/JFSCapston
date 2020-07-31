@@ -33,18 +33,37 @@ export class DatatableCandidateComponent implements OnInit {
   displayedDetailColumns = ['count', 'sentdate', 'sentstatus'];
   dataDetailSource = new MatTableDataSource<CandidateMailTable>(this.ELEMENT_META_DATA);
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    if (this.paneltableinfo) {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } else {
+      this.dataDetailSource.paginator = this.paginator;
+      this.dataDetailSource.sort = this.sort;
+    }
+  }
 
   modestatus: boolean;
 
-  constructor(private spinner: NgxSpinnerService, private service: ApiserviceService, private _snackBar: MatSnackBar) { }
+  constructor(private spinner: NgxSpinnerService, private service: ApiserviceService) { }
 
   ngOnInit(): void {
     this.paneltableinfo = true;
     this.modestatus = false;
   }
-
   onChangeUpdate(changedProp: any) {
     this.candidateList = changedProp.currentValue;
     let count: number = 1;
@@ -60,9 +79,7 @@ export class DatatableCandidateComponent implements OnInit {
         });
       count = count + 1;
     });
-    this.dataSource.paginator = this.paginator;
     this.dataSource.data = this.ELEMENT_DATA;
-    this.dataSource.sort = this.sort;
     this.paneltableinfo = true;
     this.modestatus = false;
   }
@@ -90,9 +107,7 @@ export class DatatableCandidateComponent implements OnInit {
         });
         count = count + 1;
       });
-      this.dataDetailSource.paginator = this.paginator;
       this.dataDetailSource.data = this.ELEMENT_META_DATA;
-      this.dataDetailSource.sort = this.sort;
       this.paneltableinfo = false;
       this.modestatus = true;
 
@@ -168,9 +183,7 @@ export class DatatableCandidateComponent implements OnInit {
           }
         });
       });
-      this.dataSource.paginator = this.paginator;
       this.dataSource.data = this.ELEMENT_DATA;
-      this.dataSource.sort = this.sort;
     });
   }
 
@@ -189,9 +202,7 @@ export class DatatableCandidateComponent implements OnInit {
     }
   }
   navigateButton() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.data = this.ELEMENT_DATA
-    this.dataSource.sort = this.sort;
+    this.dataSource.data = this.ELEMENT_DATA;
     this.paneltableinfo = true;
     this.modestatus = false;
   }

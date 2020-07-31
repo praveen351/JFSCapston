@@ -48,19 +48,6 @@ export class SendmailCandidateComponent implements OnInit {
   addChildData() { }
   viewChildData() {
     this.addFormdisbler = true;
-
-    // let count: number = 1;
-    // this.currentSurvey.candidate_list.forEach(cData => {
-    //   this.ELEMENT_DATA.push(
-    //     {
-    //       checked: false,
-    //       count: count,
-    //       candidate_id: cData.candidate_id,
-    //       name: cData.candidate_name,
-    //       mailId: cData.candidate_email
-    //     });
-    //   count = count + 1;
-    // });
     this.candidateList = this.currentSurvey.candidate_list;
   }
 
@@ -76,6 +63,7 @@ export class SendmailCandidateComponent implements OnInit {
           this._snackBar.open(object.survey.servey_name + ' is Select', "DISCARD", {
             duration: 1500,
           });
+          this.addFormdisbler = false;
         }
       });
     });

@@ -20,8 +20,24 @@ export class PicharInfoCandComponent implements OnInit {
   rtext: string;
   colorstream: string;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+  }
 
   ELEMENT_DATA: CandidateStatusTable[] = [];
   displayedColumns = ['name', 'mailId', 'candidatestatus'];
@@ -38,7 +54,6 @@ export class PicharInfoCandComponent implements OnInit {
     this.enableTableData = false;
     this.tablevisibility = false;
   }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -93,9 +108,7 @@ export class PicharInfoCandComponent implements OnInit {
           candidatestatus: candidatestatus
         });
       });
-      this.dataSource.paginator = this.paginator;
       this.dataSource.data = this.ELEMENT_DATA;
-      this.dataSource.sort = this.sort;
     }
   }
 }

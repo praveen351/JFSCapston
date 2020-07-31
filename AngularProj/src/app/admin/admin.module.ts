@@ -21,11 +21,13 @@ import { NgChartjsModule } from 'ng-chartjs';
 import { PicharInfoCandComponent } from './pichar-info-cand/pichar-info-cand.component';
 import { ScatterInfoCandComponent } from './scatter-info-cand/scatter-info-cand.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { UploadFilesComponent } from './upload-files/upload-files.component';
+import { DownloadFileComponent } from './download-file/download-file.component';
 // import { ChartsModule } from 'ng2-charts';
 // import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 @NgModule({
-  declarations: [SurveyValueChildComponent, SurveyHandleComponent, SurveyDetailComponent, SurveyChildDetailComponent, CandidateComponent, CandidateChildComponent, SendmailCandidateComponent, DatatableCandidateComponent, ChartCandidateComponent, PicharInfoCandComponent, ScatterInfoCandComponent, AdminHomeComponent],
+  declarations: [SurveyValueChildComponent, SurveyHandleComponent, SurveyDetailComponent, SurveyChildDetailComponent, CandidateComponent, CandidateChildComponent, SendmailCandidateComponent, DatatableCandidateComponent, ChartCandidateComponent, PicharInfoCandComponent, ScatterInfoCandComponent, AdminHomeComponent, UploadFilesComponent, DownloadFileComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -45,7 +47,9 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
     CandidateChildComponent,
     SendmailCandidateComponent,
     ChartCandidateComponent,
-    AdminHomeComponent
+    AdminHomeComponent,
+    UploadFilesComponent,
+    DownloadFileComponent
   ],
   providers: [ApiserviceService, DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

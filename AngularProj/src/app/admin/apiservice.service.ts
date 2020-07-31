@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Survey } from '../model/surveyentity';
 import { ResponseTypeEntity } from '../model/responsetypeentity';
@@ -15,6 +15,7 @@ export class ApiserviceService {
   surveyurl: string = 'http://localhost:7777/survey';
   candidateurl: string = 'http://localhost:7777/candidate';
   mailurl: string = 'http://localhost:7777/mail';
+  impexpfileUrl: string = 'http://localhost:7777/impexp';
 
   constructor(private http: HttpClient) {
 
@@ -24,13 +25,6 @@ export class ApiserviceService {
     return this.http.post<Survey>(this.surveyurl + '/saveSurvey',
       surveyObj, httpOptions);
   }
-
-  // public updateSurveyDetail(surveyObj: Survey): Observable<Survey> {
-  //   const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-  //   return this.http.post<Survey>(this.surveyurl + '/updateSurvey',
-  //     surveyObj, httpOptions);
-  // }
-
   public getAllSurvey(): Observable<Survey[]> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.get<Survey[]>(this.surveyurl + '/getAllSurvey', httpOptions);
@@ -53,14 +47,8 @@ export class ApiserviceService {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.get<ResponseTypeEntity[]>(this.surveyurl + '/getAllResponseType', httpOptions);
   }
-  // public getResponseType(response_type_id: number): Observable<ResponseTypeEntity> {
-  //   const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-  //   return this.http.get<ResponseTypeEntity>(this.surveyurl + '/getResponseType/' + response_type_id, httpOptions);
-  // }
-
   public getLoader(): Observable<Survey> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    // return this.http.get<any>(this.surveyurl + '/getLoader', httpOptions);
     return this.http.get<Survey>('http://localhost:7777/survey/getLoader', httpOptions);
   }
 
@@ -88,5 +76,64 @@ export class ApiserviceService {
   public getCandidatesStatus(survey_id: number): Observable<Object> {
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     return this.http.get<Object>(this.candidateurl + '/getCandidatesStatus/' + survey_id, httpOptions);
+  }
+
+
+  public eupload(file: File, sid: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.impexpfileUrl}/eupload/` + sid, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+  }
+  public cupload(file: File, sid: number): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    const req = new HttpRequest('POST', `${this.impexpfileUrl}/cupload/` + sid, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req);
+  }
+
+  public edownload(sid: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/vnd.ms.excel;');
+    return this.http.get(`${this.impexpfileUrl}/edownload/` + sid, {
+      headers: headers,
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+  public cdownload(sid: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'text/csv; charset=utf-8');
+    return this.http.get(`${this.impexpfileUrl}/cdownload/` + sid, {
+      headers: headers,
+      observe: 'response',
+      responseType: 'text'
+    });
+  }
+
+  public edownloaddetail(sid: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'application/vnd.ms.excel;');
+    return this.http.get(`${this.impexpfileUrl}/eddownload/` + sid, {
+      headers: headers,
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+  public cdownloaddetail(sid: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'text/csv; charset=utf-8');
+    return this.http.get(`${this.impexpfileUrl}/cddownload/` + sid, {
+      headers: headers,
+      observe: 'response',
+      responseType: 'text'
+    });
   }
 }

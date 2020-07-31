@@ -23,6 +23,7 @@ export class ChartCandidateComponent implements OnInit {
   update_btn_ctrl: boolean;
   addFormdisbler: boolean;
   dataObj: Object;
+  switchDownFile: boolean;
 
   candidateList: CandidateEntity[] = [];
 
@@ -48,6 +49,7 @@ export class ChartCandidateComponent implements OnInit {
     this.add_btn_ctrl = false;
     this.update_btn_ctrl = false;
     this.addFormdisbler = false;
+    this.switchDownFile = false;
 
     this.spinner.show();
     this.service.getAllSurvey().subscribe((dataList) => {
@@ -96,6 +98,8 @@ export class ChartCandidateComponent implements OnInit {
   }
 
   private createscatterchartdata(ddata: any) {
+    this.seriesData = [];
+    this.categories = [];
     var surveyDate: string = this.currentSurvey.opening_date_time.split('@')[0];
     var surveyTime: string = this.currentSurvey.opening_date_time.split('@')[1];
     var todate: Date = this.stringTodate(surveyDate, surveyTime);
@@ -137,17 +141,23 @@ export class ChartCandidateComponent implements OnInit {
           this._snackBar.open(object.survey.servey_name + ' is Select', "DISCARD", {
             duration: 1500,
           });
+          this.addFormdisbler = false;
+          this.switchDownFile = false;
         }
       });
     });
   }
 
   piechart() {
+    this.switchDownFile = false;
     this.switchViewEdit = true;
   }
   scatterplot() {
     this.switchViewEdit = false;
-
+    this.switchDownFile = false;
     this.createscatterchartdata(this.dataObj);
+  }
+  downFile() {
+    this.switchDownFile = true;
   }
 }

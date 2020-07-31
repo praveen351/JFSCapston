@@ -19,9 +19,10 @@ export class SurveyDetailComponent implements OnInit {
 
   surveyList: BehaviorSubject<SurveyData[]> = new BehaviorSubject<SurveyData[]>([]);
   surveyfData: BehaviorSubject<Survey> = new BehaviorSubject<Survey>(new Survey());
+
   disableadd: boolean = true;
   disableedit: boolean = true;
-  disableremove: boolean = true;
+
   selectId: number = 0;
   addFormdisbler: boolean;
   sbtnName: string = '';
@@ -45,10 +46,7 @@ export class SurveyDetailComponent implements OnInit {
     return this.formGroup.get('survey_detail_form') as FormArray;
   }
   addOptions() {
-    // console.log(this.handlerSwitch.toString());
-    // debugger
-    // if (!this.fillMode) {
-    if (this.survey_detail_form.length === this.currentSurvey.no_of_candidate) {
+    if (this.survey_detail_form.length === this.currentSurvey.no_of_question) {
       this._snackBar.open('Sorry Your No of Candidates are exceeding there limit from ' + this.currentSurvey.no_of_candidate, "DISCARD", {
         duration: 1700,
       });
@@ -103,8 +101,7 @@ export class SurveyDetailComponent implements OnInit {
     });
     this.disableadd = false;
     this.disableedit = false;
-    this.disableremove = false;
-    // console.log(survey_id);
+    this.addFormdisbler = false;
   }
 
   handleNumbervalidation(event) {
